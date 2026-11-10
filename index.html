@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#F5F0E9">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Brielldirect">
+<title>Brielldirect</title>
+<script>try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="icon" id="ico"><link rel="apple-touch-icon" id="touch"><link rel="manifest" id="man">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F0E9;--card:#FAF7F2;--soft:#F0E9DF;--ink:#5A544E;--head:#1F3A2E;--label:#8D867D;
+  --line:#DCCFBF;--pink:#DDBDB6;--pink-line:#E9D4CF;--crim:#7B2430;--crim-ink:#8B2C38;
+  --pbtn:#1F3A2E;--pbtn-ink:#F5F0E9;--err:#9B2335;--proof:#D69A95;--proof-line:#C98780;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#181C1A;--card:#1F2421;--soft:#232926;--ink:#CBC2B8;--head:#D8B9B1;--label:#8F8981;
+  --line:#3B413D;--pink:#D8B9B1;--pink-line:#4B403E;--crim:#7B2430;--crim-ink:#D8A0A4;
+  --pbtn:#D8B9B1;--pbtn-ink:#1E2421;--err:#E58A93;--proof:#CF9992;--proof-line:#B9847D;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#181C1A;--card:#1F2421;--soft:#232926;--ink:#CBC2B8;--head:#D8B9B1;--label:#8F8981;
+  --line:#3B413D;--pink:#D8B9B1;--pink-line:#4B403E;--crim:#7B2430;--crim-ink:#D8A0A4;
+  --pbtn:#D8B9B1;--pbtn-ink:#1E2421;--err:#E58A93;--proof:#CF9992;--proof-line:#B9847D;color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Jost,system-ui,sans-serif;font-weight:300;font-size:14px}
+body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+h1,h2,.serif{font-family:"Playfair Display",Georgia,serif;font-weight:500;color:var(--head);margin:0}
+.ic{display:inline-flex;line-height:0}
+.ic svg{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.screen{display:none;min-height:100vh;padding:28px 22px 36px;max-width:520px;margin:0 auto}
+.screen.on{display:block}
+.center{text-align:center}
+.mark{width:56px;height:56px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;margin:24px auto 12px;font:500 24px "Playfair Display",Georgia,serif;color:var(--head)}
+.badge{width:48px;height:48px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;margin:100px auto 16px;color:var(--head);font-size:20px}
+.badge.crim{border-color:var(--pink-line);color:var(--crim-ink)}
+.rule{width:36px;height:1px;background:var(--line);margin:14px auto 20px}
+h1.t{font-size:25px;line-height:1.2;text-align:center}
+.sub{text-align:center;color:var(--label);font-size:12.5px;line-height:1.6;margin:6px 0 0}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;border-radius:13px;border:1px solid transparent;background:var(--pbtn);color:var(--pbtn-ink);font:400 13.5px Jost,sans-serif;letter-spacing:.02em;text-decoration:none;cursor:pointer}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.pink{background:var(--proof);color:#2B1B19;border-color:var(--proof-line)}
+.btn.alt{background:var(--card);color:var(--head);border:1px solid var(--line)}
+.btn.crim{background:var(--crim);color:#F8EDEA}
+.btn .ic{font-size:16px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px 18px}
+.stack>*+*{margin-top:10px}
+label.l{display:block;font:500 12.5px Jost,sans-serif;color:var(--head);margin:12px 0 6px}
+.field{position:relative}
+.field>.ic{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--label);pointer-events:none}
+input[type=text],input[type=email],input[type=password]{width:100%;padding:11px 12px 11px 40px;border-radius:13px;border:1px solid var(--line);background:var(--card);color:var(--head);font:300 13px Jost,sans-serif;outline:none}
+input::placeholder{color:var(--label);opacity:.8}
+input:focus{border-color:var(--label)}
+.field input.pw{padding-right:44px}
+.eye{position:absolute;right:4px;top:50%;transform:translateY(-50%);width:38px;height:38px;border:0;background:none;color:var(--label);display:grid;place-items:center;font-size:17px;cursor:pointer}
+.row{display:flex;justify-content:space-between;align-items:baseline}
+.link{background:none;border:0;padding:0;color:var(--ink);font:300 12px Jost,sans-serif;cursor:pointer}
+.link.b{font-weight:500;color:var(--head);font-size:12.5px}
+.err{color:var(--err);font-size:12.5px;min-height:18px;margin:8px 0 6px}
+.ok{color:var(--head);font-size:12.5px;min-height:18px;margin:4px 0}
+.or{display:flex;align-items:center;gap:12px;margin:16px 0 2px;color:var(--label);font-size:11px;letter-spacing:.04em}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.swap{text-align:center;margin:16px 0 0;color:var(--ink);font-size:12.5px}
+.foot{margin:28px 0 0;padding-top:18px;border-top:1px solid var(--line);text-align:center;font-size:11px;line-height:1.7;color:var(--label)}
+.foot p{margin:0 0 8px}
+.foot a{color:var(--head);text-decoration:underline;word-break:break-all}
+/* main */
+.top{display:flex;align-items:center;justify-content:space-between;padding:4px 0 0}
+.top .mark{width:34px;height:34px;margin:0;font-size:14px}
+.top .acts{display:flex;align-items:center;gap:2px}
+.top button{display:flex;align-items:center;gap:7px;min-height:44px;padding:0 9px;border:0;background:none;color:var(--label);font:400 12px Jost,sans-serif;letter-spacing:.2em;text-transform:uppercase;cursor:pointer}
+.top button .ic{font-size:19px}
+.top button:hover{color:var(--head)}
+.sec{padding:44px 0 34px}
+.sec+.sec{border-top:1px solid var(--line)}
+.sec h1{font-size:28px;line-height:1.2;text-align:center;font-weight:400}
+.sec p.intro{text-align:center;line-height:1.65;font-size:13px;margin:0 0 30px}
+.cap{text-align:center;color:var(--label);font-size:11px;letter-spacing:.28em;text-transform:uppercase}
+.price{display:flex;justify-content:center;align-items:baseline;gap:8px;margin:8px 0 26px}
+.price b{font:400 40px "Playfair Display",Georgia,serif;color:var(--head);line-height:1}
+.price span{color:var(--label);letter-spacing:.3em;font-size:11px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:18px 18px 18px}
+.sec .btn{padding:15px;border-radius:16px;font-size:13px}
+.card .cap{text-align:left;font-size:10.5px;margin-bottom:16px}
+.pp{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;padding:12px 14px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+.pp small{display:block;color:var(--label);font-size:10px;letter-spacing:.24em;text-transform:uppercase;margin-bottom:3px}
+.pp b{font-weight:400;font-size:14px;color:var(--head)}
+.pp button{display:flex;align-items:center;gap:6px;padding:8px 13px;border-radius:999px;border:1px solid var(--pink-line);background:transparent;color:var(--ink);font:400 11px Jost,sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.pp button .ic{font-size:14px}
+.small{text-align:center;font-size:11.5px;color:var(--label);margin-top:16px}
+.how{font:400 18px "Playfair Display",Georgia,serif;color:var(--head);margin:34px 0 18px}
+.step{display:flex;gap:13px;align-items:flex-start;margin-bottom:16px;line-height:1.6;font-size:12.5px}
+.num{flex:none;width:26px;height:26px;border-radius:50%;border:1px solid var(--line);color:var(--label);display:grid;place-items:center;font:400 11px "Playfair Display",Georgia,serif}
+.step span:last-child{padding-top:2px}
+.note{text-align:center;font-size:11.5px;color:var(--label);margin-top:16px}
+.priv{text-align:center;color:var(--label);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;margin:26px 0 8px}
+/* notice */
+.screen.notice.on{display:flex;flex-direction:column;justify-content:center;min-height:100vh;min-height:100dvh;padding-top:36px;padding-bottom:48px}
+.notice .badge{width:61px;height:61px;margin:0 auto 26px;font-size:24px}
+.notice h1.t{font-size:26px;font-weight:400;color:var(--crim-ink)}
+.notice .rule{width:51px;margin:14px auto 26px;background:var(--crim-ink);opacity:.7}
+.notice p{color:var(--crim-ink);font-size:13.5px;line-height:1.8;font-weight:300;margin:0 0 28px}
+.chk{display:flex;gap:12px;align-items:center;margin:0 0 22px;padding:14px 16px;font-size:13px;color:var(--crim-ink);border:1px solid color-mix(in srgb,var(--crim-ink) 30%,transparent);background:color-mix(in srgb,var(--crim-ink) 7%,transparent);border-radius:16px;cursor:pointer}
+.chk input{appearance:none;-webkit-appearance:none;flex:none;width:16px;height:16px;margin:0;border-radius:50%;border:1.5px solid color-mix(in srgb,var(--crim-ink) 65%,transparent);background:transparent;display:grid;place-items:center;cursor:pointer}
+.chk input:checked{background:var(--crim);border-color:var(--crim)}
+.chk input:checked::after{content:"";width:4px;height:7px;border:solid #F8EDEA;border-width:0 1.5px 1.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.notice .err{min-height:0;margin:-10px 0 12px}
+.notice .err:empty{display:none}
+.notice .btn.crim{padding:15px;border-radius:16px;font-size:14px;color:var(--nbtn-ink,#F8EDEA)}
+.notice .badge.crim{border-color:var(--nbadge,var(--pink-line))}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .notice{--crim-ink:#E0586B;--crim:#DC4F63;--nbtn-ink:#1F1416;--nbadge:#63303A}}
+:root[data-theme="dark"] .notice{--crim-ink:#E0586B;--crim:#DC4F63;--nbtn-ink:#1F1416;--nbadge:#63303A}
+.notice .rule{opacity:1}
+.tip{position:fixed;z-index:20;left:12px;right:12px;top:calc(env(safe-area-inset-top,0px) + 10px);max-width:496px;margin:0 auto;display:flex;align-items:flex-start;gap:10px;padding:13px 14px 13px 16px;background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px rgba(40,30,20,.12);animation:drop .4s ease both}
+.tip[hidden]{display:none}
+.tip b{display:block;font:500 14px "Playfair Display",Georgia,serif;color:var(--head);margin-bottom:3px}
+.tip span{display:block;font-size:12px;line-height:1.5;color:var(--label)}
+.tip button{flex:none;margin:-4px -6px 0 auto;width:30px;height:30px;border:0;background:none;color:var(--label);display:grid;place-items:center;font-size:18px;cursor:pointer}
+@keyframes drop{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.tip{animation:none}}
+.screen#splashScr.on{display:flex;align-items:center;justify-content:center;text-align:center;min-height:100vh;min-height:100dvh;animation:rise .5s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.screen#splashScr.on{animation:none}}
+</style>
+</head>
+<body>
+
+<!-- 0. WELCOME SPLASH (shown right after login, before the notice) -->
+<section class="screen" id="splashScr"><div><div class="mark" style="width:68px;height:68px;font-size:30px">G</div><div class="serif" style="font-size:17px;letter-spacing:.24em">BRIELLDIRECT</div></div></section>
+
+<!-- ADD-TO-HOME-SCREEN POP-UP (login screen only) -->
+<div class="tip" id="tip" role="status" hidden>
+  <div><b>Untuk pengalaman terbaik</b><span>Tambahkan aplikasi ini ke Layar Utama agar mudah diakses.</span></div>
+  <button id="tipX" type="button" aria-label="Tutup"><i class="ic" data-ic="close"></i></button>
+</div>
+
+<!-- 1. LOGIN / SIGN UP -->
+<section class="screen" id="auth">
+  <div class="badge"><i class="ic" data-ic="login" id="authIc"></i></div>
+  <h1 class="t" id="aTitle">Selamat datang kembali</h1>
+  <p class="sub" id="aSub">Masuk ke akunmu</p>
+  <div class="rule"></div>
+  <div class="panel">
+    <button class="btn alt" id="bGoogle" type="button"><svg width="20" height="20" viewBox="0 0 18 18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2045c0-.6381-.0573-1.2518-.1636-1.8409H9v3.4814h4.8436c-.2086 1.125-.8427 2.0782-1.7959 2.7164v2.2581h2.9087c1.7018-1.5668 2.6836-3.874 2.6836-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.4673-.806 5.9564-2.1805l-2.9087-2.2581c-.8059.54-1.8368.8586-3.0477.8586-2.3441 0-4.3282-1.5832-5.0363-3.7104H.9573v2.3318C2.4382 15.9832 5.4818 18 9 18z"/><path fill="#FBBC05" d="M3.9641 10.71c-.18-.54-.2822-1.1168-.2822-1.71s.1023-1.17.2823-1.71V4.9582H.9573A8.9965 8.9965 0 0 0 0 9c0 1.4523.3477 2.8268.9573 4.0418L3.9641 10.71z"/><path fill="#EA4335" d="M9 3.5795c1.3214 0 2.5077.4541 3.4405 1.346l2.5813-2.5814C13.4632.8918 11.426 0 9 0 5.4818 0 2.4382 2.0168.9573 4.9582L3.9641 7.29C4.6718 5.1627 6.6559 3.5795 9 3.5795z"/></svg>Lanjutkan dengan Google</button>
+    <div class="or">ATAU</div>
+    <form id="form" novalidate>
+      <div id="nameRow" style="display:none">
+        <label class="l" for="fName">Nama lengkap</label>
+        <div class="field"><i class="ic" data-ic="user"></i><input type="text" id="fName" placeholder="Nama lengkapmu" autocomplete="name"></div>
+      </div>
+      <label class="l" for="fEmail">Email</label>
+      <div class="field"><i class="ic" data-ic="mail"></i><input type="email" id="fEmail" placeholder="kamu@contoh.com" autocomplete="email" inputmode="email"></div>
+      <div class="row"><label class="l" for="fPass">Kata sandi</label><button class="link" id="bForgot" type="button" style="margin-top:6px">Lupa kata sandi?</button></div>
+      <div class="field"><i class="ic" data-ic="lock"></i><input class="pw" type="password" id="fPass" placeholder="••••••••" autocomplete="current-password"><button class="eye" type="button" data-eye="fPass" aria-label="Tampilkan kata sandi"></button></div>
+      <div id="pass2Row" style="display:none">
+        <label class="l" for="fPass2">Konfirmasi kata sandi</label>
+        <div class="field"><i class="ic" data-ic="lock"></i><input class="pw" type="password" id="fPass2" placeholder="••••••••" autocomplete="new-password"><button class="eye" type="button" data-eye="fPass2" aria-label="Tampilkan kata sandi"></button></div>
+      </div>
+      <div class="err" id="aErr" role="alert"></div>
+      <button class="btn" id="bEmail" type="submit">Masuk</button>
+    </form>
+    <p class="swap"><span id="swapTxt">Belum punya akun?</span> <button class="link b" id="bSwap" type="button">Buat akun</button></p>
+  </div>
+  <footer class="foot">
+    <p>© 2026 Brielldirect. Hak cipta dilindungi.</p>
+    <p>Aplikasi ini beserta desain, konten, dan fitur aslinya dilindungi hak cipta. Penyalinan, penggandaan, penyebaran ulang, peniruan, penyalahgunaan, atau pencurian data tanpa izin, serta penggunaan komersial tanpa izin, dapat berujung pada tindakan hukum, termasuk sanksi perdata dan pidana sesuai hukum yang berlaku.</p>
+    <p>Untuk pertanyaan bisnis dan kerja sama<br>hubungi kami di:<br><a href="mailto:gabbriellea24@gmail.com">gabbriellea24@gmail.com</a></p>
+  </footer>
+</section>
+
+<!-- 2. FORGOT PASSWORD -->
+<section class="screen" id="resetScr">
+  <div class="badge"><i class="ic" data-ic="lock"></i></div>
+  <h1 class="t">Atur ulang kata sandi</h1>
+  <p class="sub">Masukkan email akunmu dan kami akan mengirim tautan untuk mengatur ulang kata sandi.</p>
+  <div class="rule"></div>
+  <div class="panel">
+    <form id="resetForm" novalidate>
+      <label class="l" for="rEmail" style="margin-top:0">Email</label>
+      <div class="field"><i class="ic" data-ic="mail"></i><input type="email" id="rEmail" placeholder="kamu@contoh.com" autocomplete="email" inputmode="email"></div>
+      <div class="err" id="rErr" role="alert"></div>
+      <div class="ok" id="rOk" role="status"></div>
+      <div class="stack">
+        <button class="btn" type="submit">Kirim tautan atur ulang</button>
+        <button class="btn alt" id="rBack" type="button">Kembali ke halaman masuk</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- 3. VERIFY EMAIL -->
+<section class="screen" id="verifyScr">
+  <div class="badge"><i class="ic" data-ic="mail"></i></div>
+  <h1 class="t">Cek emailmu</h1>
+  <p class="sub">Kami mengirim tautan verifikasi ke<br><b id="vMail" style="color:var(--head);font-weight:500"></b><br>Buka tautannya, lalu kembali ke sini. Cek juga folder Spam ya.</p>
+  <div class="rule"></div>
+  <div class="err center" id="vErr" role="alert"></div>
+  <div class="stack">
+    <button class="btn" id="vCheck" type="button">Saya sudah verifikasi email</button>
+    <button class="btn alt" id="vResend" type="button">Kirim ulang email</button>
+  </div>
+  <p class="swap"><button class="link b" id="vOut" type="button">Pakai email lain</button></p>
+</section>
+
+<!-- 4. NOTICE -->
+<section class="screen notice" id="notice">
+  <div class="badge crim"><i class="ic" data-ic="shield"></i></div>
+  <h1 class="t">Pemberitahuan Penting</h1>
+  <div class="rule"></div>
+  <p>Kamu akan mengakses informasi kontak pribadi saya. Jangan disalahgunakan. Jangan membagikan, menyalin, men-screenshot, atau menyebarkan apa pun dari aplikasi ini kepada siapa pun. Pelanggaran dapat berujung pada tindakan hukum berdasarkan peraturan yang berlaku tentang pelindungan data pribadi, privasi, dan pencemaran nama baik, termasuk sanksi pidana.</p>
+  <label class="chk" id="chkRow"><input type="checkbox" id="chk"><span>Saya mengerti dan menyetujui ketentuan ini.</span></label>
+  <div class="err" id="nErr" role="alert"></div>
+  <button class="btn crim" id="cont" type="button" disabled>Lanjutkan</button>
+</section>
+
+<!-- 5. MAIN -->
+<section class="screen" id="main">
+  <div class="top">
+    <div class="mark">G</div>
+    <div class="acts">
+      <button id="theme" type="button" aria-label="Ganti mode gelap / terang"></button>
+      <button id="logout" type="button"><i class="ic" data-ic="logout"></i>Keluar</button>
+    </div>
+  </div>
+  <div id="secs"></div>
+  <div class="priv">Pribadi · Hanya lihat</div>
+</section>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* ===== CONFIG: only edit here ===== */
+const CONFIG = {
+  appName: "Brielldirect",
+  price: "250.000",
+  currency: "IDR",
+  danaNumber: "085117324291",
+  email: "gabbriellea24@gmail.com",
+  firebase: {
+    apiKey: "AIzaSyBx9SfBZrkon9l1sd3BLP8idOFSBXMXLzs",
+    authDomain: "brielldirect-id.firebaseapp.com",
+    projectId: "brielldirect-id",
+    appId: "1:141437524137:web:1ae46c9bd866618335f1b8"
+  },
+  sections: [
+    { title: "Mau Kontak WhatsApp Pribadi Saya?",
+      intro: "Nomor WhatsApp pribadi saya dirahasiakan dan hanya dibagikan kepada yang sudah membayar.",
+      how: "Cara mendapatkan nomor WhatsApp saya",
+      last: "Setelah pembayaranmu diverifikasi, saya akan mengirim nomor WhatsApp saya ke emailmu.",
+      subject: "Bukti Pembayaran - Kontak WhatsApp" },
+    { title: "Mau Akun Instagram Pribadi Saya?",
+      intro: "Akun Instagram pribadi saya dirahasiakan dan hanya dibagikan kepada yang sudah membayar.",
+      how: "Cara mendapatkan akun Instagram saya",
+      last: "Setelah pembayaranmu diverifikasi, saya akan mengirim akun Instagram saya ke emailmu.",
+      subject: "Bukti Pembayaran - Instagram" }
+  ]
+};
+/* ================================== */
+
+const $ = s => document.querySelector(s);
+let tipClosed = false;
+const installed = () => (window.navigator.standalone === true) || matchMedia("(display-mode: standalone)").matches;
+const show = id => {
+  document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === id));
+  window.scrollTo(0, 0);
+  $("#tip").hidden = !(id === "auth" && !tipClosed && !installed());   // pop-up only on the login menu
+};
+const emailKey = e => (e || "").trim().toLowerCase();
+
+/* ---------- line icons ---------- */
+const P = {
+  login: '<path d="M15 3h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-3"/><path d="M10 17l5-5-5-5M15 12H3"/>',
+  logout: '<path d="M9 21H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3"/><path d="M16 17l5-5-5-5M21 12H9"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6 8.5-6"/>',
+  lock: '<rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>',
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/>',
+  eye: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  eyeoff: '<path d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4M6.5 6.6C3.9 8.3 2 12 2 12s3.6 7 10 7c1.6 0 3-.4 4.3-1M9.9 9.9a3 3 0 0 0 4.2 4.2"/>',
+  shield: '<path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M12 8.5v4.5M12 16.5v.01"/>',
+  copy: '<rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15"/>',
+  moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/>',
+  close: '<path d="M6 6l12 12M18 6L6 18"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2.5 12h2M19.5 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>'
+};
+const icon = n => '<svg viewBox="0 0 24 24" aria-hidden="true">' + P[n] + '</svg>';
+const paintIcon = el => { el.innerHTML = icon(el.dataset.ic); };
+document.querySelectorAll("[data-ic]").forEach(paintIcon);
+
+$("#tipX").onclick = () => { tipClosed = true; $("#tip").hidden = true; };
+
+/* ---------- dark / light mode ---------- */
+const isDark = () => document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+function paintTheme() {
+  $("#theme").innerHTML = '<i class="ic">' + icon(isDark() ? "sun" : "moon") + '</i>';
+  document.querySelector('meta[name=theme-color]').content = isDark() ? "#181C1A" : "#F5F0E9";
+}
+$("#theme").onclick = () => {
+  const t = isDark() ? "light" : "dark";
+  document.documentElement.dataset.theme = t;
+  try { localStorage.setItem("theme", t); } catch (e) {}
+  paintTheme();
+};
+paintTheme();
+
+/* ---------- app icon + manifest (generated at runtime) ---------- */
+(function () {
+  const c = document.createElement("canvas"); c.width = c.height = 512;
+  const x = c.getContext("2d");
+  x.fillStyle = "#1F3A2E"; x.fillRect(0, 0, 512, 512);
+  x.strokeStyle = "#D8B9B1"; x.lineWidth = 6; x.beginPath(); x.arc(256, 256, 190, 0, 7); x.stroke();
+  x.fillStyle = "#F5F0E9"; x.font = "500 250px Georgia, serif"; x.textAlign = "center"; x.textBaseline = "middle"; x.fillText("G", 256, 275);
+  const u = c.toDataURL("image/png");
+  $("#ico").href = u; $("#touch").href = u;
+  const m = { name: CONFIG.appName, short_name: CONFIG.appName, display: "standalone", background_color: "#F5F0E9", theme_color: "#F5F0E9", start_url: location.href.split("#")[0], icons: [{ src: u, sizes: "512x512", type: "image/png" }] };
+  try { $("#man").href = URL.createObjectURL(new Blob([JSON.stringify(m)], { type: "application/manifest+json" })); } catch (e) {}
+})();
+
+/* ---------- Firebase ---------- */
+if (typeof firebase === "undefined") {
+  show("auth");
+  $("#aErr").textContent = "Layanan masuk tidak dapat dimuat di sini. Buka tautan situs lewat browser.";
+  throw new Error("Firebase SDK not loaded");
+}
+firebase.initializeApp(CONFIG.firebase);
+const auth = firebase.auth(), db = firebase.firestore();
+auth.languageCode = "id";   // email verifikasi & atur ulang kata sandi dari Firebase berbahasa Indonesia
+
+/* ---------- error messages ---------- */
+const MSG = {
+  "auth/invalid-credential": "Email atau kata sandi salah.",
+  "auth/wrong-password": "Email atau kata sandi salah.",
+  "auth/user-not-found": "Email atau kata sandi salah.",
+  "auth/email-already-in-use": "Email ini sudah terdaftar. Silakan masuk.",
+  "auth/weak-password": "Kata sandi minimal 6 karakter.",
+  "auth/invalid-email": "Masukkan alamat email yang valid.",
+  "auth/too-many-requests": "Terlalu banyak percobaan. Tunggu beberapa menit lalu coba lagi.",
+  "auth/network-request-failed": "Tidak ada koneksi. Periksa internetmu lalu coba lagi.",
+  "auth/unauthorized-domain": "Domain situs ini belum diizinkan di Firebase.",
+  name: "Masukkan nama lengkapmu.",
+  empty: "Isi email dan kata sandimu.",
+  short: "Kata sandi minimal 6 karakter.",
+  mismatch: "Kata sandi tidak sama."
+};
+const msg = e => MSG[e && e.code] || "Terjadi kesalahan. Silakan coba lagi.";
+const IGNORE = ["auth/popup-closed-by-user", "auth/cancelled-popup-request"];
+
+/* ---------- show / hide password ---------- */
+document.querySelectorAll("[data-eye]").forEach(b => {
+  const paint = hidden => { b.innerHTML = '<i class="ic">' + icon(hidden ? "eye" : "eyeoff") + '</i>'; b.setAttribute("aria-label", hidden ? "Tampilkan kata sandi" : "Sembunyikan kata sandi"); };
+  paint(true);
+  b.onclick = () => { const i = $("#" + b.dataset.eye), hide = i.type !== "password"; i.type = hide ? "password" : "text"; paint(hide); };
+});
+
+/* ---------- login / sign up ---------- */
+let mode = "login", busy = false, fresh = false;   // fresh = user just logged in (show splash before notice)
+function setMode(m) {
+  mode = m; const s = m === "sign";
+  $("#aTitle").textContent = s ? "Buat akun" : "Selamat datang kembali";
+  $("#aSub").textContent = s ? "Daftar untuk memulai" : "Masuk ke akunmu";
+  $("#authIc").dataset.ic = s ? "user" : "login"; paintIcon($("#authIc"));
+  $("#nameRow").style.display = $("#pass2Row").style.display = s ? "" : "none";
+  $("#bForgot").style.display = s ? "none" : "";
+  $("#fPass").autocomplete = s ? "new-password" : "current-password";
+  $("#bEmail").textContent = s ? "Buat akun" : "Masuk";
+  $("#swapTxt").textContent = s ? "Sudah punya akun?" : "Belum punya akun?";
+  $("#bSwap").textContent = s ? "Masuk" : "Buat akun";
+  $("#aErr").textContent = "";
+}
+$("#bSwap").onclick = () => setMode(mode === "login" ? "sign" : "login");
+
+async function run(btn, errBox, fn) {
+  if (busy) return; busy = true; btn.disabled = true; errBox.textContent = "";
+  try { await fn(); } catch (e) { fresh = false; if (!IGNORE.includes(e && e.code)) errBox.textContent = msg(e); }
+  busy = false; btn.disabled = false;
+}
+
+$("#form").onsubmit = ev => {
+  ev.preventDefault();
+  run($("#bEmail"), $("#aErr"), async () => {
+    const name = $("#fName").value.trim(), email = $("#fEmail").value.trim(), pass = $("#fPass").value;
+    if (!email || !pass) throw { code: "empty" };
+    if (mode === "sign") {
+      if (!name) throw { code: "name" };
+      if (pass.length < 6) throw { code: "short" };
+      if (pass !== $("#fPass2").value) throw { code: "mismatch" };
+      const r = await auth.createUserWithEmailAndPassword(email, pass);
+      await r.user.updateProfile({ displayName: name });
+      await r.user.sendEmailVerification();
+      route(auth.currentUser);               // goes to "Check your email"
+    } else {
+      fresh = true;
+      await auth.signInWithEmailAndPassword(email, pass);   // onAuthStateChanged routes
+    }
+  });
+};
+
+$("#bGoogle").onclick = () => run($("#bGoogle"), $("#aErr"), async () => {
+  const p = new firebase.auth.GoogleAuthProvider();
+  fresh = true;
+  try { await auth.signInWithPopup(p); }
+  catch (e) {
+    if (e.code === "auth/popup-blocked" || e.code === "auth/operation-not-supported-in-this-environment") await auth.signInWithRedirect(p);
+    else throw e;
+  }
+});
+
+/* ---------- forgot password ---------- */
+$("#bForgot").onclick = () => { $("#rEmail").value = $("#fEmail").value; $("#rErr").textContent = $("#rOk").textContent = ""; show("resetScr"); };
+$("#rBack").onclick = () => show("auth");
+$("#resetForm").onsubmit = ev => {
+  ev.preventDefault();
+  const btn = ev.target.querySelector("button[type=submit]");
+  $("#rOk").textContent = "";
+  run(btn, $("#rErr"), async () => {
+    const e = $("#rEmail").value.trim(); if (!e) throw { code: "auth/invalid-email" };
+    try { await auth.sendPasswordResetEmail(e); }
+    catch (x) { if (x.code !== "auth/user-not-found") throw x; }
+    $("#rOk").textContent = "Jika email itu terdaftar, tautan atur ulang sedang dikirim.";
+  });
+};
+
+/* ---------- email verification ---------- */
+let poll = null, cool = null;
+const stopPoll = () => { clearInterval(poll); poll = null; };
+function showVerify(email) {
+  $("#vMail").textContent = email; $("#vErr").textContent = "";
+  show("verifyScr");
+  stopPoll(); poll = setInterval(() => checkVerified(true), 4000);
+}
+async function checkVerified(silent) {
+  const u = auth.currentUser; if (!u) return;
+  try {
+    await u.reload();
+    if (u.emailVerified) { await u.getIdToken(true); stopPoll(); fresh = true; return route(u); }
+    if (!silent) $("#vErr").textContent = "Emailmu belum terverifikasi. Buka dulu tautan di emailmu.";
+  } catch (e) { if (!silent) $("#vErr").textContent = msg(e); }
+}
+document.addEventListener("visibilitychange", () => { if (!document.hidden && $("#verifyScr").classList.contains("on")) checkVerified(true); });
+$("#vCheck").onclick = () => checkVerified(false);
+$("#vResend").onclick = async () => {
+  const b = $("#vResend"); $("#vErr").textContent = "";
+  try {
+    await auth.currentUser.sendEmailVerification();
+    let t = 60; b.disabled = true; b.textContent = "Kirim ulang dalam " + t + " dtk";
+    clearInterval(cool);
+    cool = setInterval(() => { t--; if (t <= 0) { clearInterval(cool); b.disabled = false; b.textContent = "Kirim ulang email"; } else b.textContent = "Kirim ulang dalam " + t + " dtk"; }, 1000);
+  } catch (e) { $("#vErr").textContent = msg(e); }
+};
+$("#vOut").onclick = async () => { stopPoll(); fresh = false; setMode("sign"); await auth.signOut(); };
+
+/* ---------- notice / agreement ---------- */
+let cur = null, agreed = false;
+const agreementRef = email => db.collection("agreements").doc(emailKey(email));
+
+async function route(u) {
+  if (!u) { cur = null; stopPoll(); return show("auth"); }
+  const needsVerify = u.providerData.some(p => p.providerId === "password") && !u.emailVerified;
+  if (needsVerify) return showVerify(u.email);
+  stopPoll();
+  cur = { email: u.email || u.uid, name: u.displayName || "" };
+  document.querySelectorAll("[data-proof]").forEach(a => a.href = proofLink(CONFIG.sections[a.dataset.proof], cur));
+  try { agreed = (await agreementRef(cur.email).get()).exists; } catch (e) { agreed = false; }
+  $("#chkRow").style.display = agreed ? "none" : "flex";
+  $("#chk").checked = false; $("#cont").disabled = !agreed; $("#nErr").textContent = "";
+  if (fresh) {                                   // just logged in: welcome splash, then the notice
+    fresh = false; show("splashScr");
+    setTimeout(() => { if (cur && $("#splashScr").classList.contains("on")) show("notice"); }, 1600);
+  } else show("notice");
+}
+$("#chk").onchange = e => $("#cont").disabled = !e.target.checked;
+$("#cont").onclick = async () => {
+  if (!agreed) {
+    try { await agreementRef(cur.email).set({ email: emailKey(cur.email), name: cur.name, agreedAt: firebase.firestore.FieldValue.serverTimestamp() }); }
+    catch (e) { $("#nErr").textContent = "Persetujuan gagal disimpan. Silakan coba lagi."; return; }
+  }
+  show("main");
+};
+$("#logout").onclick = () => { fresh = false; auth.signOut(); };
+
+/* ---------- main screen ---------- */
+const proofLink = (s, who) => "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent(s.subject) +
+  "&body=" + encodeURIComponent("Halo, ini bukti pembayaran saya.\n\nNama: " + ((who && who.name) || "") + "\nEmail akun: " + ((who && who.email) || "") + "\n\n(Mohon lampirkan screenshot pembayaran pada email ini.)");
+$("#secs").innerHTML = CONFIG.sections.map((s, i) => `
+<div class="sec">
+  <h1>${s.title}</h1>
+  <div class="rule" style="margin:18px auto 24px"></div>
+  <p class="intro">${s.intro}</p>
+  <div class="cap">Harga</div>
+  <div class="price"><b>Rp${CONFIG.price}</b><span>${CONFIG.currency}</span></div>
+  <div class="card">
+    <div class="cap">Bayar lewat DANA</div>
+    <button class="btn" type="button" data-copy="${i}"><i class="ic">${icon("copy")}</i><span>Salin Nomor DANA</span></button>
+    <div class="pp"><div><small>DANA</small><b>${CONFIG.danaNumber}</b></div></div>
+    <div class="small">Pembayaran hanya melalui DANA.</div>
+  </div>
+  <h2 class="how">${s.how}</h2>
+  <div class="step"><span class="num">1</span><span>Buka aplikasi DANA, pilih Kirim, lalu transfer Rp${CONFIG.price} ke nomor di atas.</span></div>
+  <div class="step"><span class="num">2</span><span>Kirim bukti pembayaran ke ${CONFIG.email} beserta namamu.</span></div>
+  <div class="step"><span class="num">3</span><span>${s.last}</span></div>
+  <a class="btn pink" data-proof="${i}" style="margin-top:22px" href="${proofLink(s)}"><i class="ic">${icon("mail")}</i>Kirim Bukti Pembayaran</a>
+  <div class="note">Verifikasi biasanya memakan waktu hingga 1 jam.</div>
+</div>`).join("");
+document.querySelectorAll("[data-copy]").forEach(b => b.onclick = async () => {
+  try { await navigator.clipboard.writeText(CONFIG.danaNumber); }
+  catch (e) { const t = document.createElement("textarea"); t.value = CONFIG.danaNumber; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); }
+  const sp = b.querySelector("span"), o = sp.textContent; sp.textContent = "Tersalin"; setTimeout(() => sp.textContent = o, 1500);
+});
+
+/* ---------- start ---------- */
+setMode("login");
+auth.onAuthStateChanged(route);
+</script>
+</body>
+</html>
