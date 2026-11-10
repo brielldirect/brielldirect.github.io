@@ -733,7 +733,7 @@ function renderCountries() {
     ? items.map(o => '<button type="button" class="crow" data-cc="' + o.c + '"><span class="fl">' + flagOf(o.c) + '</span><span>' + esc(o.n) + '</span></button>').join("")
     : '<div class="cnone">' + tr("noRes") + '</div>';
 }
-$("#cOther").onclick = () => goLoad($("#cOther"), () => { $("#cSearch").value = ""; renderCountries(); show("otherScr"); });
+$("#cOther").onclick = () => { $("#cSearch").value = ""; renderCountries(); show("otherScr"); };
 $("#cSearch").oninput = renderCountries;
 $("#cList").onclick = e => { const b = e.target.closest("[data-cc]"); if (b) goLoad(b, () => { setLang("en"); show("notice"); }); };
 $("#cBack").onclick = () => show("countryScr");
