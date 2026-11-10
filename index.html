@@ -133,11 +133,22 @@ input:focus{border-color:var(--label)}
 .notice .err:empty{display:none}
 .notice .btn.crim{padding:15px;border-radius:16px;font-size:14px;color:var(--nbtn-ink,#F8EDEA)}
 .notice .badge.crim{border-color:var(--nbadge,var(--pink-line))}
+.notice .btn.crim.loading{position:relative;color:transparent;pointer-events:none;opacity:1}
+.notice .btn.crim.loading::after{content:"";position:absolute;left:50%;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;border:2px solid var(--nbtn-ink,#F8EDEA);border-right-color:transparent;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.notice .btn.crim.loading::after{animation-duration:1.6s}}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .notice{--crim-ink:#E0586B;--crim:#DC4F63;--nbtn-ink:#1F1416;--nbadge:#63303A}}
 :root[data-theme="dark"] .notice{--crim-ink:#E0586B;--crim:#DC4F63;--nbtn-ink:#1F1416;--nbadge:#63303A}
 .notice .rule{opacity:1}
 .tip{position:fixed;z-index:20;left:12px;right:12px;top:calc(env(safe-area-inset-top,0px) + 10px);max-width:496px;margin:0 auto;display:flex;align-items:flex-start;gap:10px;padding:13px 14px 13px 16px;background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px rgba(40,30,20,.12);animation:drop .4s ease both}
 .tip[hidden]{display:none}
+.tip .tipbody{flex:1;min-width:0;cursor:pointer}
+.tip{max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px - env(safe-area-inset-top,0px));overflow-y:auto}
+.tip .tiphow{cursor:default}
+.tip h3{font:500 12.5px Jost,sans-serif;color:var(--head);margin:12px 0 7px}
+.tip ol{margin:0;padding:0;list-style:none;counter-reset:st}
+.tip li{counter-increment:st;display:flex;gap:10px;align-items:flex-start;font-size:12px;line-height:1.5;color:var(--ink);margin:0 0 7px}
+.tip li::before{content:counter(st);flex:none;width:20px;height:20px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:11px;color:var(--head)}
 .tip b{display:block;font:500 14px "Playfair Display",Georgia,serif;color:var(--head);margin-bottom:3px}
 .tip span{display:block;font-size:12px;line-height:1.5;color:var(--label)}
 .tip button{flex:none;margin:-4px -6px 0 auto;width:30px;height:30px;border:0;background:none;color:var(--label);display:grid;place-items:center;font-size:18px;cursor:pointer}
@@ -155,7 +166,18 @@ input:focus{border-color:var(--label)}
 
 <!-- ADD-TO-HOME-SCREEN POP-UP (login screen only) -->
 <div class="tip" id="tip" role="status" hidden>
-  <div><b data-i="tipT">For the best experience</b><span data-i="tipS">Add this app to your Home Screen for quick access.</span></div>
+  <div class="tipbody" id="tipOpen" role="button" tabindex="0"><b data-i="tipT">For the best experience</b><span data-i="tipS">Add this app to your Home Screen for quick access.</span></div>
+  <div class="tipbody tiphow" id="tipHow" hidden>
+    <b data-i="howT">Add to Home Screen</b>
+    <div id="howIos">
+      <h3 data-i="howIosH">iPhone / iPad (Safari)</h3>
+      <ol><li data-i="ios1"></li><li data-i="ios2"></li><li data-i="ios3"></li><li data-i="ios4"></li></ol>
+    </div>
+    <div id="howAnd">
+      <h3 data-i="howAndH">Android (Chrome)</h3>
+      <ol><li data-i="and1"></li><li data-i="and2"></li><li data-i="and3"></li></ol>
+    </div>
+  </div>
   <button id="tipX" type="button" data-ia="close" aria-label="Close"><i class="ic" data-ic="close"></i></button>
 </div>
 
@@ -340,6 +362,7 @@ const show = id => {
   document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === id));
   window.scrollTo(0, 0);
   $("#tip").hidden = !(id === "auth" && !tipClosed && !installed());   // pop-up only on the login menu
+  if ($("#tip").hidden) { $("#tipOpen").hidden = false; $("#tipHow").hidden = true; }
 };
 const emailKey = e => (e || "").trim().toLowerCase();
 
@@ -366,6 +389,13 @@ const paintIcon = el => { el.innerHTML = icon(el.dataset.ic); };
 document.querySelectorAll("[data-ic]").forEach(paintIcon);
 
 $("#tipX").onclick = () => { tipClosed = true; $("#tip").hidden = true; };
+/* tap the pop-up -> step-by-step sheet (steps follow the device) */
+const UA = navigator.userAgent, isIOS = /iPad|iPhone|iPod/.test(UA) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1), isAnd = /Android/i.test(UA);
+$("#howIos").hidden = isAnd && !isIOS;
+$("#howAnd").hidden = isIOS && !isAnd;
+const openHow = () => { $("#tipOpen").hidden = true; $("#tipHow").hidden = false; };
+$("#tipOpen").onclick = openHow;
+$("#tipOpen").onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openHow(); } };
 
 /* ---------- dark / light mode ---------- */
 const isDark = () => document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
@@ -398,6 +428,12 @@ paintTheme();
 const T = {
   en: {
     tipT: "For the best experience", tipS: "Add this app to your Home Screen for quick access.", close: "Close",
+    howT: "Add to Home Screen",
+    howIosH: "iPhone / iPad (Safari)", ios1: "Open this page in Safari.",
+    ios2: "Tap the Share button (square with an arrow pointing up). If you don’t see it, tap ⋯ then Share.",
+    ios3: "Scroll down and choose “Add to Home Screen”.", ios4: "Tap “Add”. The app icon will appear on your Home Screen.",
+    howAndH: "Android (Chrome)", and1: "Tap the ⋮ menu in the top-right corner.",
+    and2: "Choose “Install app” or “Add to Home screen”.", and3: "Tap “Install” or “Add” to confirm.",
     google: "Continue with Google", or: "OR",
     lblName: "Full name", phName: "Your full name", lblEmail: "Email", phEmail: "you@example.com",
     lblPass: "Password", forgot: "Forgot password?", lblPass2: "Confirm password",
@@ -438,6 +474,12 @@ const T = {
   },
   id: {
     tipT: "Untuk pengalaman terbaik", tipS: "Tambahkan aplikasi ini ke Layar Utama agar mudah diakses.", close: "Tutup",
+    howT: "Tambahkan ke Layar Utama",
+    howIosH: "iPhone / iPad (Safari)", ios1: "Buka halaman ini di Safari.",
+    ios2: "Ketuk tombol Bagikan (kotak dengan panah ke atas). Kalau tidak terlihat, ketuk ⋯ lalu Bagikan.",
+    ios3: "Gulir ke bawah dan pilih “Tambah ke Layar Utama”.", ios4: "Ketuk “Tambah”. Ikon aplikasi akan muncul di Layar Utama.",
+    howAndH: "Android (Chrome)", and1: "Ketuk menu ⋮ di pojok kanan atas.",
+    and2: "Pilih “Instal aplikasi” atau “Tambahkan ke layar utama”.", and3: "Ketuk “Instal” atau “Tambahkan” untuk konfirmasi.",
     google: "Lanjutkan dengan Google", or: "ATAU",
     lblName: "Nama lengkap", phName: "Nama lengkapmu", lblEmail: "Email", phEmail: "kamu@contoh.com",
     lblPass: "Kata sandi", forgot: "Lupa kata sandi?", lblPass2: "Konfirmasi kata sandi",
@@ -652,10 +694,16 @@ async function route(u) {
 }
 $("#chk").onchange = e => $("#cont").disabled = !e.target.checked;
 $("#cont").onclick = async () => {
+  const btn = $("#cont");
+  if (btn.classList.contains("loading")) return;
+  btn.classList.add("loading"); btn.disabled = true; $("#nErr").textContent = "";
+  const wait = new Promise(r => setTimeout(r, 1500));   // minimum loading time
   if (!agreed) {
     try { await agreementRef(cur.email).set({ email: emailKey(cur.email), name: cur.name, agreedAt: firebase.firestore.FieldValue.serverTimestamp() }); }
-    catch (e) { $("#nErr").textContent = tr("saveFail"); return; }
+    catch (e) { btn.classList.remove("loading"); btn.disabled = false; $("#nErr").textContent = tr("saveFail"); return; }
   }
+  await wait;
+  btn.classList.remove("loading");
   show("main");
 };
 $("#cId").onclick = () => { setLang("id"); show("notice"); };
