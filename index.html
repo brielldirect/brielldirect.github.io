@@ -758,7 +758,7 @@ function renderSecs() {
     <div class="small">${P_.remitlyLink ? X.paySmallBoth : X.paySmall}</div>`;
   $("#secs").innerHTML = CONFIG.sections.map((sec, i) => { const s = sec[lang], P_ = Object.assign({}, CONFIG.pay[lang], s.pay || {}), payCard = payCardFor(P_); return `
 <div class="sec">
-  <p class="welcome">${isId ? "Silakan pesan apa pun yang kamu butuhkan" : "You’re welcome to order anything you need"}</p>
+  ${i === 0 ? `<p class="welcome">${isId ? "Silakan pesan apa pun yang kamu butuhkan" : "You’re welcome to order anything you need"}</p>` : ""}
   <h1>${s.title}</h1>
   <div class="rule" style="margin:18px auto 24px"></div>
   <p class="intro">${s.intro}</p>
